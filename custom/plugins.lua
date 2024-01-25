@@ -2,19 +2,32 @@ local cmp = require "cmp"
 
 local plugins = {
   {
-    "williamboman/mason.nvim",
-    opts = {
-      ensure_installed = {
-        "rust-analyzer",
-      },
-    },
+    "nvimtools/none-ls.nvim",
+    event = "VeryLazy",
+    opts = function()
+      return require "custom.configs.null-ls"
+    end,
   },
   {
     "neovim/nvim-lspconfig",
-    config = function()
+      config = function()
       require "plugins.configs.lspconfig"
       require "custom.configs.lspconfig"
     end,
+  },
+  {"ellisonleao/glow.nvim", config = true, cmd = "Glow"},
+  {
+    "williamboman/mason.nvim",
+    opts = {
+      ensure_installed = {
+        "lua-language-server",
+        "rust-analyzer",
+        "eslint-lsp",
+        "prettierd",
+        "tailwindcss-language-server",
+        "typescript-language-server",
+      },
+    },
   },
   {
     "simrat39/rust-tools.nvim",
@@ -72,6 +85,36 @@ local plugins = {
       table.insert(M.sources, {name = "crates"})
       return M
     end,
+  },
+  {
+    "nvim-treesitter/nvim-treesitter",
+    opts = function()
+      local opts = require "plugins.configs.treesitter"
+      opts.ensure_installed = {
+        "lua",
+        "javascript",
+        "typescript",
+        "tsx",
+      }
+      return opts
+    end,
+  },
+  {
+    "windwp/nvim-ts-autotag",
+    ft = {"javascript", "javascriptreact", "typescript", "typescriptreact"},
+    config = function()
+      require("nvim-ts-autotag").setup()
+    end,
+  },
+  {
+    "roobert/tailwindcss-colorizer-cmp.nvim",
+    -- optionally, override the default options:
+    config = function()
+      require("tailwindcss-colorizer-cmp").setup({
+        color_square_width = 2,
+      })
+    end
   }
 }
+
 return plugins
