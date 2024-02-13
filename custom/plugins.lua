@@ -26,6 +26,9 @@ local plugins = {
         "prettierd",
         "tailwindcss-language-server",
         "typescript-language-server",
+        "nginx-language-server",
+        "sqls",
+        "sql-formatter",
       },
     },
   },
@@ -95,6 +98,7 @@ local plugins = {
         "javascript",
         "typescript",
         "tsx",
+        "sql",
       }
       return opts
     end,
